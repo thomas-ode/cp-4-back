@@ -12,6 +12,28 @@ router.get('/', (req, res) => {
   });
 });
 
+router.get('/players', (req, res) => {
+  const sql = "SELECT * FROM roster WHERE role='player' ORDER BY number";
+  connection.query(sql, (err, results) => {
+    if (err) {
+      res.status(500).send({errorMessage: err.message});
+    } else {
+      res.status(200).json(results);
+    }
+  });
+});
+
+router.get('/coaches', (req, res) => {
+  const sql = "SELECT * FROM roster WHERE role='coach'";
+  connection.query(sql, (err, results) => {
+    if (err) {
+      res.status(500).send({errorMessage: err.message});
+    } else {
+      res.status(200).json(results);
+    }
+  });
+});
+
 router.post('/', (req, res) => {
   const sql = "INSERT INTO roster SET ?";
   connection.query(sql, req.body, (err, results) => {
