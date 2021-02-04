@@ -63,7 +63,18 @@ router.put('/:id', (req, res) => {
   });
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/admin/delete-player/:id', (req, res) => {
+  const sql = "DELETE FROM roster WHERE id=?";
+  connection.query(sql, req.params.id, (err, results) => {
+    if (err) {
+      res.status(500).send({errorMessage: err.message});
+    } else {
+      res.sendStatus(200);
+    }
+  });
+});
+
+router.delete('/admin/delete-coach/:id', (req, res) => {
   const sql = "DELETE FROM roster WHERE id=?";
   connection.query(sql, req.params.id, (err, results) => {
     if (err) {

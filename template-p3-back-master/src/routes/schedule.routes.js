@@ -12,6 +12,28 @@ router.get('/', (req, res) => {
   });
 });
 
+router.get('/regulars', (req, res) => {
+  const sql = "SELECT * FROM schedule WHERE type = 'regular'";
+  connection.query(sql, (err, results) => {
+    if (err) {
+      res.status(500).send({errorMessage: err.message});
+    } else {
+      res.status(200).json(results);
+    }
+  });
+});
+
+router.get('/post-seasons', (req, res) => {
+  const sql = "SELECT * FROM schedule WHERE type = 'posteseason'";
+  connection.query(sql, (err, results) => {
+    if (err) {
+      res.status(500).send({errorMessage: err.message});
+    } else {
+      res.status(200).json(results);
+    }
+  });
+});
+
 router.post('/', (req, res) => {
   const sql = "INSERT INTO schedule SET ?";
   connection.query(sql, req.body, (err, results) => {
